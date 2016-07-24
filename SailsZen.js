@@ -9,31 +9,25 @@ function log(filename, error) {
   }
 }
 
+function copyTemplate(templateName, filepath) {
+  
+  const contents = fs.readFileSync(`${__dirname}/templates/${templateName}`)
+  return fs.writeFileSync(filepath, contents)
+
+}
+
 function writeSailsrc(inputPath) {
-
-  const contents = {
-    "generators": {
-      "modules": {}
-    },
-    "hooks": {
-      "grunt": false
-    },
-    "paths": {
-      "public": "assets"
-    }
-  }
-
   const filepath = inputPath || __dirname + '/.sailsrc'
 
-  var err = fs.writeFileSync(filepath, JSON.stringify(contents, null, 4))
+  var err = copyTemplate("sailsrc", filepath)
+
   log('.sailsrc', err)
 }
 
-function writeDockerfile(path) {
+function writeDockerfile(inputPath) {
+  const filepath = inputPath || __dirname + '/Dockerfile'
 
-  const contents = fs.readFileSync(__dirname+'/templates/Dockerfile')
-
-  var err = fs.writeFileSync(path || __dirname+'/Dockerfile', contents)
+  var err = copyTemplate("Dockerfile", filepath)
 
   log('Dockerfile', err)
 }
