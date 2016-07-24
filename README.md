@@ -11,9 +11,9 @@ npm install -g sails-zen
 ## Usage
 
 ````
-cd some-sails-project
+>cd some-sails-project
 
-sails-zen
+>sails-zen
 ````
 
 ````
