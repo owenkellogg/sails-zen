@@ -13,33 +13,23 @@ function copyTemplate(templateName, filepath) {
   
   const contents = fs.readFileSync(`${__dirname}/templates/${templateName}`)
   return fs.writeFileSync(filepath, contents)
-
 }
 
-function writeSailsrc(inputPath) {
-  const filepath = inputPath || __dirname + '/.sailsrc'
+function writeFile(filename, outputPath) {
+  const filepath = outputPath || `${process.cwd()}/${filename}`
+  var err = copyTemplate(filename, filepath)
 
-  var err = copyTemplate("sailsrc", filepath)
-
-  log('.sailsrc', err)
-}
-
-function writeDockerfile(inputPath) {
-  const filepath = inputPath || __dirname + '/Dockerfile'
-
-  var err = copyTemplate("Dockerfile", filepath)
-
-  log('Dockerfile', err)
+  log(filename, err)
 }
 
 module.exports.writeFile = (filename, filepath) => {
 
   switch(filename) {
     case ".sailsrc":
-        writeSailsrc(filepath)
+        writeFile('.sailsrc', filepath)
         break;
     case "Dockerfile":
-        writeDockerfile(filepath)
+        writeFile('Dockerfile', filepath)
         break;
     default:
         console.log(`No file generator exists for ${filename}`)
